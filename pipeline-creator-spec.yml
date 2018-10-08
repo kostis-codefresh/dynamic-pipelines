@@ -1,0 +1,40 @@
+version: '1.0'
+kind: pipeline
+metadata:
+  name: kostis-codefresh/dynamic-pipelines/pipeline-creator
+  description: "Pipeline creator for pipeline-spec.yml files"
+  isPublic: false
+  labels:
+    tags: []
+  deprecate:
+    repoPipeline: true
+  originalYamlString: |
+    version: '1.0'
+    steps:
+      pipelineCreator:
+        title: Setting up a new pipeline programatically
+        image: codefresh/cli
+        commands:
+          - codefresh --help
+  project: kostis-codefresh/dynamic-pipelines
+spec:
+  triggers:
+    - type: git
+      repo: kostis-codefresh/dynamic-pipelines
+      events:
+        - push
+      branchRegex: /.*/gi
+      modifiedFilesGlob: '**/pipeline-spec.yml'
+      provider: github
+  contexts: []
+  variables:
+    - key: PORT
+      value: '8080'
+  steps:
+    pipelineCreator:
+      title: Setting up a new pipeline programatically
+      image: codefresh/cli
+      commands:
+        - codefresh --help
+  stages: []
+

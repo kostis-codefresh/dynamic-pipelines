@@ -1,0 +1,34 @@
+version: '1.0'
+kind: pipeline
+metadata:
+  name: kostis-codefresh/dynamic-pipelines/my-python-app-pipeline
+  description: "Docker creation for python app"
+  isPublic: false
+  labels:
+    tags: []
+  deprecate:
+    repoPipeline: true
+  project: kostis-codefresh/dynamic-pipelines
+spec:
+  triggers:
+    - type: git
+      repo: kostis-codefresh/dynamic-pipelines
+      events:
+        - push
+      branchRegex: /.*/gi
+      modifiedFilesGlob: 'my-python-app/**'
+      provider: github
+  contexts: []
+  variables:
+    - key: PORT
+      value: '5000'
+  steps:
+    BuildingDockerImage:
+      title: Building Docker Image
+      type: build
+      image_name: my-monorepo-python-app
+      working_directory: ./
+      tag: '${{CF_BRANCH_TAG_NORMALIZED}}-${{CF_SHORT_REVISION}}'
+      dockerfile: Dockerfile
+  stages: []
+
