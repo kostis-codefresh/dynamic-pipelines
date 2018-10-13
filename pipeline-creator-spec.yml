@@ -8,14 +8,6 @@ metadata:
     tags: []
   deprecate:
     repoPipeline: true
-  originalYamlString: |
-    version: '1.0'
-    steps:
-      pipelineCreator:
-        title: Setting up a new pipeline programatically
-        image: codefresh/cli
-        commands:
-          - codefresh --help
   project: kostis-codefresh/dynamic-pipelines
 spec:
   triggers:
@@ -35,6 +27,7 @@ spec:
       title: Setting up a new pipeline programatically
       image: codefresh/cli
       commands:
-        - codefresh --help
+        - echo Creating a pipeline from $CF_BRANCH/pipeline-spec.yml
+        - codefresh create pipeline -f $CF_BRANCH/pipeline-spec.yml
   stages: []
 
