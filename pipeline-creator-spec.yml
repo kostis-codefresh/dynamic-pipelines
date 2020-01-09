@@ -1,14 +1,10 @@
 version: '1.0'
 kind: pipeline
 metadata:
-  name: kostis-codefresh/dynamic-pipelines/pipeline-creator
+  name: dynamic-pipelines/pipeline-creator
   description: "Pipeline creator for pipeline-spec.yml files"
-  isPublic: false
-  labels:
-    tags: []
-  deprecate:
-    repoPipeline: true
-  project: kostis-codefresh/dynamic-pipelines
+  deprecate: {}
+  project: dynamic-pipelines
 spec:
   triggers:
     - type: git
@@ -18,10 +14,10 @@ spec:
       branchRegex: /.*/gi
       modifiedFilesGlob: '**/pipeline-spec.yml'
       provider: github
+      name: my-trigger
+      context: github-1
   contexts: []
-  variables:
-    - key: PORT
-      value: '8080'
+  variables: []
   steps:
     pipelineCreator:
       title: Setting up a new pipeline programatically
